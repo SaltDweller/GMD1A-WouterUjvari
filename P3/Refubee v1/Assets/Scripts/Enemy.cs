@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour {
                 if (enemyType == Enemytype.isWalkingEnemy || enemyType == Enemytype.isFlyingEnemyHorizontal)
                 {
                     transform.Translate(-0.05f * speed, 0, 0, Space.World);
-                    transform.rotation = Quaternion.AngleAxis(-180, Vector3.up);
+                    transform.rotation = Quaternion.AngleAxis(-90, Vector3.up);
                 }
 
                 else if (enemyType == Enemytype.isFlyingEnemyvertical)
@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour {
                 if (enemyType == Enemytype.isWalkingEnemy || enemyType == Enemytype.isFlyingEnemyHorizontal)
                 {
                     transform.Translate(0.05f * speed, 0, 0, Space.World);
-                    transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+                    transform.rotation = Quaternion.AngleAxis(90, Vector3.up);
                 }
                 else if (enemyType == Enemytype.isFlyingEnemyvertical)
                 {
@@ -123,9 +123,23 @@ public class Enemy : MonoBehaviour {
         {
             playerOnBody = true;
             print("AU");
-            
-            body.size = new Vector3(4, 1, 4);
-            playerBee.GetComponent<Rigidbody>().velocity = new Vector3(0, 20, 0);
+
+            //body.size = new Vector3(4, 2, 4);
+            //playerBee.GetComponent<Rigidbody>().velocity = new Vector3(0, 20, 0);
+            //playerBee.GetComponent<Rigidbody>().velocity.x = -playerBee.GetComponent<Rigidbody>().velocity.x 
+            //rigidbody.velocity = transform.forward * rigidbody.velocity.magnitude;
+            //playerBee.GetComponent<Rigidbody>().velocity = transform.forward * playerBee.GetComponent<Rigidbody>().velocity.x  ;
+            //playerBee.GetComponent<Rigidbody>().velocity = playerBee.transform.InverseTransformDirection(playerBee.GetComponent<Rigidbody>().velocity);
+
+            if (transform.position.x - playerBee.transform.position.x <= 0)
+            {
+                playerBee.GetComponent<Rigidbody>().AddForce(Vector3.right * 10000);               
+            }
+
+            else if (transform.position.x - playerBee.transform.position.x >= 0)
+            {
+                playerBee.GetComponent<Rigidbody>().AddForce(Vector3.left * 10000);                              
+            }
         }
     }
 
@@ -142,7 +156,7 @@ public class Enemy : MonoBehaviour {
         if (other.gameObject.tag == "Player")
         {
             playerOnBody = false;
-            body.size = new Vector3(1, 1, 1);
+            //body.size = new Vector3(1, 2, 1);
         }
 
     }
@@ -152,7 +166,7 @@ public class Enemy : MonoBehaviour {
 
     void Die()
     {
-        managerSound.SoundPlayAU();
+        managerSound.SoundPlayMeh();
         dead = true;
         managerGame.IncreaseScore(2);
         gameObject.SetActive(false);

@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+
 
 public class ManagerUI : MonoBehaviour {
+
+
 
     public ManagerGame managerGame;
     public ManagerDialogue managerDialogue;
@@ -17,8 +22,12 @@ public class ManagerUI : MonoBehaviour {
     public Button button4;
     public GameObject score;
 
+
+
     void Start()
     {
+
+
         managerGame = gameObject.GetComponent<ManagerGame>();
         managerDialogue = GameObject.FindGameObjectWithTag("Player").GetComponent<ManagerDialogue>();
         playerBee = GameObject.FindGameObjectWithTag("Player");
@@ -37,6 +46,13 @@ public class ManagerUI : MonoBehaviour {
         button3.onClick.AddListener(Skip9);
         button4.onClick.AddListener(Skip11);
 
+    }
+
+
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("Hive");
     }
 
     public void PauseMenuOn()

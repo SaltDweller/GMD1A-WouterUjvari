@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ManagerGame : MonoBehaviour {
 
@@ -15,6 +16,7 @@ public class ManagerGame : MonoBehaviour {
     public GameObject tree;
     public Material skyboxMat;
     public Quaternion sunAngle;
+    public GameObject currentCheckPoint;
     public float smooth;
     public float rotation;
     public int timeOfDay;
@@ -22,6 +24,7 @@ public class ManagerGame : MonoBehaviour {
 
     public bool pauseGame = false;
     public bool showPauseGUI = false;
+    
 
 
     void Start()
@@ -78,6 +81,11 @@ public class ManagerGame : MonoBehaviour {
         playerScore = playerScore + amount;
     }
 
+    public void IncreaseHealth(int amount)
+    {
+        beeScript.beeHealth = beeScript.beeHealth + amount;
+    }
+
     public void SpawnSomePickUpsForBlueNPC()
     {
         Instantiate(triple, new Vector3(-100, 235, 0), Quaternion.identity);
@@ -86,5 +94,12 @@ public class ManagerGame : MonoBehaviour {
     public void SpawnTreeForGroenLinksSupporter()
     {
         Instantiate(tree, new Vector3(8, 240, 0), Quaternion.identity);
+    }
+
+    public void EndGame()
+    {
+        Application.Quit();
+        print("quit");
+
     }
 }

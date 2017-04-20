@@ -5,8 +5,12 @@ using UnityEngine;
 public class Pickup : MonoBehaviour {
 
     public int amountOfPointsThisPickUpAwardsUponPickingUp = 1;
-    public bool doesRotate = true;
+    public int amountOfHealthThisPickUpAwardsUponPickingUp = 1;
+    
     public float rotationSpeed = 5;
+    public enum PickupType {score, health }
+    public PickupType pickupType;
+
 
     public GameObject playerBee;
     public ManagerGame managerGame;
@@ -19,7 +23,7 @@ public class Pickup : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (doesRotate)
+        if (pickupType == PickupType.score)
         {
             transform.Rotate(rotationSpeed, rotationSpeed * 0.5f, 0);
         }
@@ -30,8 +34,17 @@ public class Pickup : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            managerGame.IncreaseScore(amountOfPointsThisPickUpAwardsUponPickingUp);
-            gameObject.SetActive(false);
+            if(pickupType == PickupType.score)
+            {
+                managerGame.IncreaseScore(amountOfPointsThisPickUpAwardsUponPickingUp);
+                gameObject.SetActive(false);
+            }
+            else if(pickupType == PickupType.health && playerBee.GetComponent<BeeScript>().beeHealth <= 2)
+            {
+                gameObject.SetActive(false);
+                managerGame.IncreaseHealth(amountOfHealthThisPickUpAwardsUponPickingUp);
+            }          
+            
         }
     }
 }

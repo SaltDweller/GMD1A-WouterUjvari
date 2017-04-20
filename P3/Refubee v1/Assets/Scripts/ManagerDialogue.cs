@@ -64,27 +64,59 @@ public class ManagerDialogue : MonoBehaviour {
     
     void LateUpdate()
     {
-        if (dialogue.questions[dialogue.entryPoint] == "I have just spawned one...")
+        if (dialogue != null)
         {
-            if (!onetime)
+            if (dialogue.questions[dialogue.entryPoint] == "I have just spawned one...")
             {
-                managerGame.SpawnSomePickUpsForBlueNPC();
-                onetime =true;
+                if (!onetime)
+                {
+                    managerGame.SpawnSomePickUpsForBlueNPC();
+                    onetime = true;
+                }
+            }
+
+            if (dialogue.questions[dialogue.entryPoint] == "!!!END GAME!!!")
+            {
+                if (true)
+                {
+                    managerGame.EndGame();
+                    
+                }
+            }
+            if (dialogue.questions[dialogue.entryPoint] == "EXIT")
+            {
+                dialogue = null;
+            }
+
+            if (dialogue.questions[dialogue.entryPoint] == "I have just spawned a tree right next to you.")
+            {
+                if (!secondtime)
+                {
+                    managerGame.SpawnTreeForGroenLinksSupporter();
+                    secondtime = true;
+                }
+
+            }
+
+            if (dialogue.questions[dialogue.entryPoint] == "I have just spawned a tree right next to you.")
+            {
+                if (!secondtime)
+                {
+                    managerGame.SpawnTreeForGroenLinksSupporter();
+                    secondtime = true;
+                }
+
             }
         }
 
-        if (dialogue.questions[dialogue.entryPoint] == "I have just spawned a tree right next to you.")
-        {
-            if (!secondtime)
-            {
-                managerGame.SpawnTreeForGroenLinksSupporter();
-                secondtime = true;
-            }
-
-        }
 
 
-            if (dialogue != null)
+
+
+
+
+
+        if (dialogue != null)
         {
             cinematicCamera = true;
             question = dialogue.questions[dialogue.entryPoint];

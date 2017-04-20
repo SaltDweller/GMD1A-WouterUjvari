@@ -13,6 +13,7 @@ public class BeeScript : MonoBehaviour {
     public bool beeInteract;
     public ManagerDialogue managerDialogue;
     public ManagerCamera managerCamera;
+    public ManagerGame managerGame;
     public Animator anim;
     public float cameraDistance;
     public float cameraDistanceCinematic;
@@ -23,6 +24,7 @@ public class BeeScript : MonoBehaviour {
     public GameObject playerCamera;
     public float speedModifier;
     public Rigidbody rb;
+
     
 
     public ManagerSound managerSound;
@@ -34,6 +36,7 @@ public class BeeScript : MonoBehaviour {
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
         managerDialogue = GameObject.FindGameObjectWithTag("Player").GetComponent<ManagerDialogue>();
         managerCamera = GameObject.Find("BossObject").GetComponent<ManagerCamera>();
+        managerGame = GameObject.Find("BossObject").GetComponent<ManagerGame>();
         //particle = GameObject.FindGameObjectWithTag("Dust").GetComponent<ParticleSystem>();
     }
 
@@ -88,6 +91,14 @@ public class BeeScript : MonoBehaviour {
 
     void Update()
     {
+
+
+        if(beeHealth <= 0)
+        {
+            ReSpawnAtLatestCheckpoint();
+            
+        }
+
         if (Input.GetButtonDown("Jump") && beeStanding)
         {
             beeJumping = true;
@@ -118,6 +129,11 @@ public class BeeScript : MonoBehaviour {
             anim.SetBool("pBeeStanding", true);
             managerSound.SoundPlayland();
         }
+
+        if (other.tag == "Void")
+        {
+            ReSpawnAtLatestCheckpoint();
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -131,6 +147,16 @@ public class BeeScript : MonoBehaviour {
 
     public void Hurt()
     {
-        beeHealth--;       
+        beeHealth--;
+        managerSound.SoundPlayAU();     
     }
+    
+    public void ReSpawnAtLatestCheckpoint()
+    {
+        transform.position = managerGame.currentCheckPoint.transform.position;
+        beeHealth = 3;
+        managerSound.SoundPlayAU();
+    }
+
+
 }

@@ -11,6 +11,7 @@ public class ManagerSound : MonoBehaviour {
     public AudioClip au;
     public AudioSource as1;
     public AudioSource as2;
+    public AudioSource as3;
 
     void Start()
     {
@@ -29,9 +30,14 @@ public class ManagerSound : MonoBehaviour {
         gameObject.GetComponent<AudioSource>().Play();
     }
 
-    public void SoundPlayAU()
+    public void SoundPlayMeh()
     {
         as2.Play();
+    }
+
+    public void SoundPlayAU()
+    {
+        as3.Play();
     }
 
 
