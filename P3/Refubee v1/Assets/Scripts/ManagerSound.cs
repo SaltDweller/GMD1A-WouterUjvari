@@ -12,6 +12,7 @@ public class ManagerSound : MonoBehaviour {
     public AudioSource as1;
     public AudioSource as2;
     public AudioSource as3;
+    public AudioSource as4;
 
     void Start()
     {
@@ -38,6 +39,11 @@ public class ManagerSound : MonoBehaviour {
     public void SoundPlayAU()
     {
         as3.Play();
+    }
+
+    public void SoundPickUp()
+    {
+        as4.Play();
     }
 
 

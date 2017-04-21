@@ -24,6 +24,11 @@ public class BeeScript : MonoBehaviour {
     public GameObject playerCamera;
     public float speedModifier;
     public Rigidbody rb;
+    public float invincibilityFrames = 1f;
+    public bool canBeeHurt = true;
+
+    public Material[] material;
+    Renderer rend;
 
     
 
@@ -31,6 +36,10 @@ public class BeeScript : MonoBehaviour {
 
     void Start()
     {
+        rend = GameObject.Find("Mesh").GetComponent<Renderer>();
+        rend.enabled = true;
+        rend.sharedMaterial = material[0];
+
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -91,9 +100,23 @@ public class BeeScript : MonoBehaviour {
 
     void Update()
     {
+        if (!canBeeHurt)
+        {
 
+            rend.sharedMaterial = material[1];
+            invincibilityFrames -= Time.deltaTime;
+            if (invincibilityFrames <= 0)
+            {
+                invincibilityFrames = 1f;
+                canBeeHurt = true;
+            }
+        }
+        else
+        {
+            rend.sharedMaterial = material[0];
+        }
 
-        if(beeHealth <= 0)
+            if (beeHealth <= 0)
         {
             ReSpawnAtLatestCheckpoint();
             
@@ -147,8 +170,13 @@ public class BeeScript : MonoBehaviour {
 
     public void Hurt()
     {
-        beeHealth--;
-        managerSound.SoundPlayAU();     
+        if (canBeeHurt)
+        {
+            canBeeHurt = false;
+            beeHealth--;
+            managerSound.SoundPlayAU();
+        }
+     
     }
     
     public void ReSpawnAtLatestCheckpoint()
@@ -156,6 +184,7 @@ public class BeeScript : MonoBehaviour {
         transform.position = managerGame.currentCheckPoint.transform.position;
         beeHealth = 3;
         managerSound.SoundPlayAU();
+        managerGame.playerScore = 0;
     }
 
 

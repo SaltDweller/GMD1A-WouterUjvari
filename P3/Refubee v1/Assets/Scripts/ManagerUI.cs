@@ -50,10 +50,7 @@ public class ManagerUI : MonoBehaviour {
 
 
 
-    public void StartGame()
-    {
-        SceneManager.LoadScene("Hive");
-    }
+
 
     public void PauseMenuOn()
     {
